@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Keen-Slider code example (Fader / Auto Switch / Dots Navigation and Pause Button)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Keen-Slider code example</h1>
+    </header>
+    <main>
+        <div class="block__slider">
+            <div>
+                <div id="is-keen-slider" class="fader">
+                    <div class="fader-slide keen-slider__slide">
+                        <img src="https://images.unsplash.com/photo-1590004953392-5aba2e72269a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                            alt="">
+                    </div>
+                    <div class="fader-slide keen-slider__slide">
+                        <img src="https://images.unsplash.com/photo-1590004845575-cc18b13d1d0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                            alt="">
+                    </div>
+                    <div class="fader-slide keen-slider__slide">
+                        <img src="https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                            alt="">
+                    </div>
+                    <div class="fader-slide keen-slider__slide">
+                        <img src="https://images.unsplash.com/photo-1590005176489-db2e714711fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                            alt="">
+                    </div>
+                </div>
+                <div class="fader-pause-area">
+                    <label class="fader-pause-btn" id="is-fader-pause" tabindex="0">
+                        <input type="checkbox" class="fader-pause-check" id="is-fader-pause-check">
+                        <span class="fader-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img"
+                                aria-label="スライドショーを再生">
+                                <title>スライドショーを再生</title>
+                                <path fill-rule="evenodd"
+                                    d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        <span class="fader-pause">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img"
+                                aria-label="スライドショーを停止">
+                                <title>スライドショーを停止</title>
+                                <path fill-rule="evenodd"
+                                    d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
+    <script>
+        const navigation = (slider) => {
+            let dots
+
+            const markup = (remove) => {
+                dotMarkup(remove)
+            }
+
+            const removeElement = (element) => {
+                element.parentNode.removeChild(element)
+            }
+
+            const createDiv = (className) => {
+                const div = document.createElement("div")
+                const classNames = className.split(" ")
+                classNames.forEach((name) => div.classList.add(name))
+                return div
+            }
+
+            const createBtn = (className) => {
+                const button = document.createElement("button")
+                const classNames = className.split(" ")
+                classNames.forEach((name) => button.classList.add(name))
+                return button
+            }
+
+            const dotMarkup = (remove) => {
+                if (remove) {
+                    removeElement(dots)
+                    return
+                }
+                dots = createDiv("fader-navigation-dots")
+                slider.track.details.slides.forEach((_e, idx) => {
+                    const dot = createBtn("dot")
+                    const span = document.createElement("span");
+                    span.textContent = "スライド No." + (idx + 1);
+                    dot.appendChild(span);
+                    dot.addEventListener("click", () => slider.moveToIdx(idx))
+                    dots.appendChild(dot)
+                })
+                slider.container.parentNode.insertBefore(dots, slider.container.nextSibling)
+            }
+
+            const updateClasses = () => {
+                const slide = slider.track.details.rel
+                Array.from(dots.children).forEach(function (dot, idx) {
+                    idx === slide
+                        ? dot.classList.add("is-active")
+                        : dot.classList.remove("is-active")
+                })
+            }
+
+            slider.on("created", () => {
+                markup()
+                updateClasses()
+            })
+            slider.on("optionsChanged", () => {
+                markup(true)
+                markup()
+                updateClasses()
+            })
+            slider.on("slideChanged", () => {
+                updateClasses()
+            })
+            slider.on("destroyed", () => {
+                markup(true)
+            })
+        }
+
+        let interval = 0;
+        const autoplay = (run) => {
+            clearInterval(interval);
+            if (run) {
+                interval = setInterval(() => {
+                    if (slider) {
+                        slider.next();
+                    }
+                }, 3000);
+            }
+        }
+
+        const sliderElement = document.getElementById("is-keen-slider");
+        if (sliderElement) {
+            sliderElement.addEventListener("mouseover", () => {
+                autoplay(false);
+            });
+            sliderElement.addEventListener("mouseout", () => {
+                autoplay(!stopCheckbox.checked);
+            });
+        }
+
+        const stopBtn = document.getElementById("is-fader-pause");
+        const stopCheckbox = document.getElementById("is-fader-pause-check");
+        const onCheckboxChange = (isChecked) => {
+            autoplay(!isChecked);
+
+            if (isChecked) {
+                stopBtn.classList.add("is-pause");
+            } else {
+                stopBtn.classList.remove("is-pause");
+            }
+        }
+        if (stopCheckbox) {
+            stopCheckbox.addEventListener("change", () => {
+                onCheckboxChange(stopCheckbox.checked);
+            });
+        }
+
+        const setInitialAutoplayState = () => {
+            const isChecked = stopCheckbox.checked;
+            onCheckboxChange(isChecked);
+        }
+
+        const slider = new KeenSlider("#is-keen-slider", {
+            loop: true,
+            defaultAnimation: {
+                duration: 3000,
+            },
+            dragStart: () => {
+                autoplay(false);
+            },
+            dragEnd: () => {
+                autoplay(true);
+            },
+            detailsChanged: (s) => {
+                s.slides.forEach((element, idx) => {
+                    element.style.opacity = s.track.details.slides[idx].portion;
+                });
+            },
+            renderMode: "custom",
+        }, [navigation]);
+
+        window.onload = setInitialAutoplayState;
+        autoplay(!stopCheckbox.checked);
+    </script>
+</body>
+
+</html>
