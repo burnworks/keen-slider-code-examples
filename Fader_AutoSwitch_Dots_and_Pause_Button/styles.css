@@ -101,8 +101,8 @@ main {
     border: 1px solid rgb(0 0 0);
 }
 
-.fader-pause-btn:hover {
-    cursor: pointer;
+.fader-pause-btn:focus-within {
+    outline: 2px solid blue;
 }
 
 .fader-pause-btn .fader-play {
@@ -138,14 +138,20 @@ main {
 }
 
 .fader-pause-check {
-    clip: rect(0,0,0,0);
-    border-width: 0;
-    height: 1px;
-    margin: -1px;
+    border: none;
+    background-color: transparent;
+    height: 1.5rem;
+    margin: 0;
     opacity: 0;
-    overflow: hidden;
-    padding: 0;
+	padding: 0;
     position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    width: 1.5rem;
+    -webkit-appearance: none;
+    appearance: none;
 }
+
+.fader-pause-check:hover {
+    cursor: pointer;
+}
+
+
