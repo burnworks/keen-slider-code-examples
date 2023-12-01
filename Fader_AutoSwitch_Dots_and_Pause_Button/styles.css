@@ -16,6 +16,7 @@ main {
 .block__slider {
     position: relative;
     aspect-ratio: 1.6/1;
+    height: fit-content;
     max-height: 500px;
     width: 100vw;
     overflow: hidden;
