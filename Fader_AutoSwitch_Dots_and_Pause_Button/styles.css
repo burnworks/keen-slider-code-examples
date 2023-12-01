@@ -64,6 +64,10 @@ main {
     border: 1px solid rgb(0 0 0);
 }
 
+.fader-navigation-dots .dot:hover {
+    cursor: pointer;
+}
+
 .fader-navigation-dots .dot span {
     position: absolute;
     width: 1px;
