@@ -89,20 +89,26 @@
 
             const dotMarkup = (remove) => {
                 if (remove) {
-                    removeElement(dots)
-                    return
+                    removeElement(dots);
+                    return;
                 }
-                dots = createDiv("fader-navigation-dots")
+                dots = createDiv("fader-navigation-dots");
+                const fragment = document.createDocumentFragment();
+
+                const onDotClick = (idx) => () => slider.moveToIdx(idx);
+
                 slider.track.details.slides.forEach((_e, idx) => {
-                    const dot = createBtn("dot")
+                    const dot = createBtn("dot");
                     const span = document.createElement("span");
                     span.textContent = "スライド No." + (idx + 1);
                     dot.appendChild(span);
-                    dot.addEventListener("click", () => slider.moveToIdx(idx))
-                    dots.appendChild(dot)
-                })
-                slider.container.parentNode.insertBefore(dots, slider.container.nextSibling)
-            }
+                    dot.addEventListener("click", onDotClick(idx));
+                    fragment.appendChild(dot);
+                });
+
+                dots.appendChild(fragment);
+                slider.container.parentNode.insertBefore(dots, slider.container.nextSibling);
+            };
 
             const updateClasses = () => {
                 const slide = slider.track.details.rel
