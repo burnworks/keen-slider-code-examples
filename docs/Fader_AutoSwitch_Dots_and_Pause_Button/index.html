@@ -14,24 +14,24 @@
         <h1>Keen-Slider code example</h1>
     </header>
     <main>
-        <div class="block__slider">
+        <div class="block__slider" aria-roledescription="carousel" aria-label="カルーセルのサンプル">
             <div>
-                <div id="is-keen-slider" class="fader">
-                    <div class="fader-slide keen-slider__slide">
+                <div id="is-keen-slider" class="fader" aria-live="off">
+                    <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
                         <img src="https://images.unsplash.com/photo-1590004953392-5aba2e72269a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
-                            alt="">
+                            alt="画像：01">
                     </div>
-                    <div class="fader-slide keen-slider__slide">
+                    <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
                         <img src="https://images.unsplash.com/photo-1590004845575-cc18b13d1d0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
-                            alt="">
+                            alt="画像：02">
                     </div>
-                    <div class="fader-slide keen-slider__slide">
+                    <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
                         <img src="https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
-                            alt="">
+                            alt="画像：03">
                     </div>
-                    <div class="fader-slide keen-slider__slide">
+                    <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
                         <img src="https://images.unsplash.com/photo-1590005176489-db2e714711fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
-                            alt="">
+                            alt="画像：04">
                     </div>
                 </div>
                 <div class="fader-pause-area">
@@ -100,6 +100,7 @@
                 slider.track.details.slides.forEach((_e, idx) => {
                     const dot = createBtn("dot");
                     const span = document.createElement("span");
+                    dot.setAttribute("aria-controls", "is-keen-slider");
                     span.textContent = "スライド No." + (idx + 1);
                     dot.appendChild(span);
                     dot.addEventListener("click", onDotClick(idx));
@@ -165,8 +166,10 @@
 
             if (isChecked) {
                 stopBtn.classList.add("is-pause");
+                sliderElement.setAttribute("aria-live", "polite");
             } else {
                 stopBtn.classList.remove("is-pause");
+                sliderElement.setAttribute("aria-live", "off");
             }
         }
         if (stopCheckbox) {
