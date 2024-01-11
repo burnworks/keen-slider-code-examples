@@ -66,13 +66,21 @@
             renderMode: "performance",
             drag: false,
             created(s) {
-                s.moveToIdx(s.track.details.slides.length - 1, true, { duration: s.track.details.slides.length * sliderDuration, easing: (t) => t });
+                const length = s.track.details.slides.length;
+                const target = length - 1;
+                s.moveToIdx(target, true, { duration: length * sliderDuration, easing: (t) => t });
             },
             updated(s) {
-                s.moveToIdx(s.track.details.abs + s.track.details.slides.length - 1, true, { duration: s.track.details.slides.length * sliderDuration, easing: (t) => t });
+                const abs = s.track.details.abs;
+                const length = s.track.details.slides.length;
+                const target = abs + length - 1;
+                s.moveToIdx(target, true, { duration: length * sliderDuration, easing: (t) => t });
             },
             animationEnded(s) {
-                s.moveToIdx(s.track.details.abs + s.track.details.slides.length - 1, true, { duration: s.track.details.slides.length * sliderDuration, easing: (t) => t });
+                const abs = s.track.details.abs;
+                const length = s.track.details.slides.length;
+                const target = abs + length - 1;
+                s.moveToIdx(target, true, { duration: length * sliderDuration, easing: (t) => t });
             },
         })
 
