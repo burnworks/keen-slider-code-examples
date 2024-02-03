@@ -84,17 +84,12 @@ footer a:hover {
 }
 
 .fader-navigation-dots .dot {
-    appearance: none;
-    -webkit-appearance: none;
     position: relative;
-    height: 0.75rem;
-    width: 0.75rem;
-    aspect-ratio: 1/1;
+    height: 1.5rem;
+    width: 1.5rem;
     border-radius: 9999px;
     background-color: rgb(255 255 255);
     border: 1px solid rgb(0 0 0);
-    flex-grow: 0;
-    flex-shrink: 0;
     overflow: hidden;
 }
 
@@ -197,6 +192,11 @@ footer a:hover {
     .fader-navigation-dots {
         right: 5rem;
         bottom: 2.5rem;
+    }
+
+    .fader-navigation-dots .dot {
+        height: 0.75rem;
+        width: 0.75rem;
     }
 
     .fader-pause-area {
