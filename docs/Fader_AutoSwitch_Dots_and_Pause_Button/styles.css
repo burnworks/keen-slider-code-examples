@@ -194,11 +194,6 @@ footer a:hover {
         bottom: 2.5rem;
     }
 
-    .fader-navigation-dots .dot {
-        height: 0.75rem;
-        width: 0.75rem;
-    }
-
     .fader-pause-area {
         bottom: 2.5rem;
         right: 2.5rem;
