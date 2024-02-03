@@ -47,9 +47,8 @@ footer a:hover {
     position: relative;
     aspect-ratio: 1.91/1;
     height: fit-content;
-    max-height: 500px;
     width: 100vw;
-    max-width: 800px;
+    max-width: 1200px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
@@ -58,7 +57,7 @@ footer a:hover {
 .fader {
     display: flex;
     align-items: center;
-    max-width: 800px;
+    max-width: 1200px;
 }
 
 .fader-slide {
