@@ -55,7 +55,7 @@ footer a:hover {
 .fader {
     display: flex;
     align-items: center;
-    aspect-ratio: 1.6/1;
+    aspect-ratio: 1.91/1;
     height: fit-content;
     max-height: 500px;
     width: 100vw;
