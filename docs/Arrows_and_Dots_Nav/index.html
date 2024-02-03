@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Keen-Slider code example (Slide / Arrows and Dots Navigation)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Keen-Slider code example</h1>
+    </header>
+    <main>
+        <div class="block__slider" aria-roledescription="carousel" aria-label="カルーセルのサンプル">
+            <div id="is-keen-slider" class="fader" aria-live="polite">
+                <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
+                    <img src="https://images.unsplash.com/photo-1590004953392-5aba2e72269a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                        alt="画像：01">
+                </div>
+                <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
+                    <img src="https://images.unsplash.com/photo-1590004845575-cc18b13d1d0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                        alt="画像：02">
+                </div>
+                <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
+                    <img src="https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                        alt="画像：03">
+                </div>
+                <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="slide">
+                    <img src="https://images.unsplash.com/photo-1590005176489-db2e714711fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                        alt="画像：04">
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>
+            @burnworks
+            <a href="https://github.com/burnworks/keen-slider-code-examples">
+                keen-slider-code-examples : Keen-Slider code examples
+            </a>
+        </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.js"></script>
+    <script>
+        const navigation = (slider) => {
+            let dots, arrowLeft, arrowRight;
+
+            const removeElement = (element) => {
+                element && element.parentNode.removeChild(element);
+            };
+
+            const createElement = (tagName, className) => {
+                const el = document.createElement(tagName);
+                className.split(" ").forEach(name => el.classList.add(name));
+                return el;
+            };
+
+            const arrowMarkup = (remove) => {
+                if (remove) {
+                    removeElement(arrowLeft)
+                    removeElement(arrowRight)
+                    return
+                };
+                arrowLeft = createElement("button", "fader-arrow fader-arrow-left");
+                arrowRight = createElement("button", "fader-arrow fader-arrow-right");
+                const spanLeft = document.createElement("span");
+                const spanRight = document.createElement("span");
+                arrowLeft.setAttribute("aria-controls", "is-keen-slider");
+                spanLeft.textContent = "前のスライドへ";
+                arrowLeft.appendChild(spanLeft);
+                arrowLeft.addEventListener("click", () => slider.prev());
+
+                arrowRight.setAttribute("aria-controls", "is-keen-slider");
+                spanRight.textContent = "次のスライドへ";
+                arrowRight.appendChild(spanRight);
+                arrowRight.addEventListener("click", () => slider.next());
+
+                slider.container.parentNode.insertBefore(arrowLeft, slider.container.nextSibling);
+                slider.container.parentNode.insertBefore(arrowRight, arrowLeft.nextSibling);
+            };
+
+            const dotMarkup = (remove) => {
+                if (remove) {
+                    removeElement(dots)
+                    return
+                };
+                dots = createElement("div", "fader-navigation-dots");
+                const fragment = document.createDocumentFragment();
+
+                const onDotClick = (idx) => () => slider.moveToIdx(idx);
+
+                slider.track.details.slides.forEach((_e, idx) => {
+                    const dot = createElement("button", "dot");
+                    const span = document.createElement("span");
+                    dot.setAttribute("aria-controls", "is-keen-slider");
+                    span.textContent = "スライド No." + (idx + 1);
+                    dot.appendChild(span);
+                    dot.addEventListener("click", onDotClick(idx));
+                    fragment.appendChild(dot);
+                });
+
+                dots.appendChild(fragment);
+                slider.container.parentNode.insertBefore(dots, slider.container.nextSibling);
+            };
+
+            const updateClasses = () => {
+                const slide = slider.track.details.rel
+                Array.from(dots.children).forEach(function (dot, idx) {
+                    idx === slide
+                        ? dot.classList.add("is-active")
+                        : dot.classList.remove("is-active")
+                });
+            };
+
+            const updateAccessibilityAttributes = (slider) => {
+                slider.slides.forEach((slide, index) => {
+                    const isActive = index === slider.track.details.rel;
+                    slide.setAttribute('aria-hidden', !isActive);
+                });
+            };
+
+            slider.on("created", () => {
+                arrowMarkup();
+                dotMarkup();
+                updateClasses();
+                updateAccessibilityAttributes(slider);
+            });
+            slider.on("optionsChanged", () => {
+                arrowMarkup(true);
+                dotMarkup(true);
+                arrowMarkup();
+                dotMarkup();
+                updateClasses();
+            });
+            slider.on("slideChanged", () => {
+                updateClasses();
+                updateAccessibilityAttributes(slider);
+            });
+            slider.on("destroyed", () => {
+                arrowMarkup(true);
+                dotMarkup(true);
+            });
+        };
+
+        const slider = new KeenSlider("#is-keen-slider", {
+            loop: true,
+        }, [navigation]);
+    </script>
+</body>
+
+</html>
