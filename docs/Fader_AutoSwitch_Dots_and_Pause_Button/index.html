@@ -75,38 +75,30 @@
 
             const markup = (remove) => {
                 dotMarkup(remove)
-            }
+            };
 
             const removeElement = (element) => {
-                element.parentNode.removeChild(element)
-            }
+                element && element.parentNode.removeChild(element);
+            };
 
-            const createDiv = (className) => {
-                const div = document.createElement("div")
-                const classNames = className.split(" ")
-                classNames.forEach((name) => div.classList.add(name))
-                return div
-            }
-
-            const createBtn = (className) => {
-                const button = document.createElement("button")
-                const classNames = className.split(" ")
-                classNames.forEach((name) => button.classList.add(name))
-                return button
-            }
+            const createElement = (tagName, className) => {
+                const el = document.createElement(tagName);
+                className.split(" ").forEach(name => el.classList.add(name));
+                return el;
+            };
 
             const dotMarkup = (remove) => {
                 if (remove) {
                     removeElement(dots);
                     return;
-                }
-                dots = createDiv("fader-navigation-dots");
+                };
+                dots = createElement("div", "fader-navigation-dots");
                 const fragment = document.createDocumentFragment();
 
                 const onDotClick = (idx) => () => slider.moveToIdx(idx);
 
                 slider.track.details.slides.forEach((_e, idx) => {
-                    const dot = createBtn("dot");
+                    const dot = createElement("button", "dot");
                     const span = document.createElement("span");
                     dot.setAttribute("aria-controls", "is-keen-slider");
                     span.textContent = "スライド No." + (idx + 1);
@@ -125,25 +117,34 @@
                     idx === slide
                         ? dot.classList.add("is-active")
                         : dot.classList.remove("is-active")
-                })
-            }
+                });
+            };
+
+            const updateAccessibilityAttributes = (slider) => {
+                slider.slides.forEach((slide, index) => {
+                    const isActive = index === slider.track.details.rel;
+                    slide.setAttribute('aria-hidden', !isActive);
+                });
+            };
 
             slider.on("created", () => {
-                markup()
-                updateClasses()
-            })
+                markup();
+                updateClasses();
+                updateAccessibilityAttributes(slider);
+            });
             slider.on("optionsChanged", () => {
-                markup(true)
-                markup()
-                updateClasses()
-            })
+                markup(true);
+                markup();
+                updateClasses();
+            });
             slider.on("slideChanged", () => {
-                updateClasses()
-            })
+                updateClasses();
+                updateAccessibilityAttributes(slider);
+            });
             slider.on("destroyed", () => {
-                markup(true)
-            })
-        }
+                markup(true);
+            });
+        };
 
         let interval = 0;
         const autoplay = (run) => {
@@ -155,7 +156,7 @@
                     }
                 }, 3000);
             }
-        }
+        };
 
         const sliderElement = document.getElementById("is-keen-slider");
         if (sliderElement) {
@@ -165,7 +166,7 @@
             sliderElement.addEventListener("mouseout", () => {
                 autoplay(!stopCheckbox.checked);
             });
-        }
+        };
 
         const stopBtn = document.getElementById("is-fader-pause");
         const stopCheckbox = document.getElementById("is-fader-pause-check");
@@ -179,17 +180,17 @@
                 stopBtn.classList.remove("is-pause");
                 sliderElement.setAttribute("aria-live", "off");
             }
-        }
+        };
         if (stopCheckbox) {
             stopCheckbox.addEventListener("change", () => {
                 onCheckboxChange(stopCheckbox.checked);
             });
-        }
+        };
 
         const setInitialAutoplayState = () => {
             const isChecked = stopCheckbox.checked;
             onCheckboxChange(isChecked);
-        }
+        };
 
         const slider = new KeenSlider("#is-keen-slider", {
             loop: true,
