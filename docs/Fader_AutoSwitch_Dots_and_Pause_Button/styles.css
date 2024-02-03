@@ -84,6 +84,8 @@ footer a:hover {
 }
 
 .fader-navigation-dots .dot {
+    appearance: none;
+    -webkit-appearance: none;
     position: relative;
     height: 0.75rem;
     width: 0.75rem;
