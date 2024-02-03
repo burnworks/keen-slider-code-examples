@@ -80,12 +80,14 @@ footer a:hover {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    height: 1.5rem;
 }
 
 .fader-navigation-dots .dot {
     position: relative;
     height: 0.75rem;
     width: 0.75rem;
+    aspect-ratio: 1/1;
     border-radius: 9999px;
     background-color: rgb(255 255 255);
     border: 1px solid rgb(0 0 0);
