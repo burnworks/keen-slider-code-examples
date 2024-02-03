@@ -4,6 +4,8 @@ Keen-Slider を使用したスライド（カルーセル）のサンプル。
 
 Sample Slider (Carousel) Implementation Using Keen-Slider.  
 Designed with an Emphasis on Web Accessibility.
+
+- [Keen-Slider](https://keen-slider.io/)
 ## 1. Fader_AutoSwitch_Dots_and_Pause_Button
 - フェードイン / フェードアウトによるスライド（ループ再生）
 - 自動再生
