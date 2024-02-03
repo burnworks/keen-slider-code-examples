@@ -98,7 +98,6 @@ footer a:hover {
     border: 1px solid rgb(0 0 0);
     flex-grow: 0;
     flex-shrink: 0;
-    z-index: 1;
 }
 
 .fader-navigation-dots .dot:hover {
