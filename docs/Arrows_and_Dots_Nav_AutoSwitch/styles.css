@@ -1,0 +1,238 @@
+html {
+    min-height: 100dvh;
+}
+
+body {
+    background-color: rgb(255 255 255);
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+    color: rgb(51 51 51);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+main {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    background-color: rgb(0 0 0);
+    color: rgb(255 255 255);
+    padding: 1.5rem 0.25rem;
+}
+
+footer a {
+    color: rgb(255 255 255);
+    text-decoration: underline;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+footer a:hover {
+    color: rgb(255 255 255);
+    text-decoration: none;
+}
+
+.block__slider {
+    position: relative;
+    height: fit-content;
+    width: 100vw;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fader {
+    display: flex;
+    align-items: center;
+    aspect-ratio: 1.91/1;
+    height: fit-content;
+    width: 100vw;
+    max-width: 1200px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fader-slide {
+    height: 100%;
+    width: 100%;
+}
+
+.fader-slide img {
+    height: auto;
+    width: 100%;
+    -o-object-fit: cover;
+        object-fit: cover;
+}
+
+.fader-navigation-dots {
+    display: flex;
+    height: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.fader-navigation-dots .dot {
+    position: relative;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 9999px;
+    background-color: rgb(255 255 255);
+    border: 1px solid rgb(0 0 0);
+    overflow: hidden;
+}
+
+.fader-navigation-dots .dot:hover {
+    cursor: pointer;
+}
+
+.fader-navigation-dots .dot span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.fader-navigation-dots .dot.is-active {
+    background-color: rgb(95 191 82);
+}
+
+.fader-arrow {
+    width: 2rem;
+    height: 2rem;
+    background-color: rgb(255 255 255);
+    background-size: 1.5rem 1.5rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 9999px;
+    border: none;
+    top: 0px;
+    bottom: 0px;
+    margin: auto 0;
+    position: absolute;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    transform: translateY(-1.25rem);
+}
+
+.fader-arrow span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.fader-arrow:hover {
+    background-color: rgb(249 250 251);
+    cursor: pointer;
+}
+
+.fader-arrow-left {
+    left: 0.5rem;
+    background-image: url('data:image/svg+xml, %3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" %3E%3C/path%3E%3C/svg%3E');
+}
+
+.fader-arrow-right {
+    right: 0.5rem;
+    background-image: url('data:image/svg+xml, %3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"%3E%3C/path%3E%3C/svg%3E');
+}
+
+.fader-pause-area {
+    display: flex;
+    height: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 2.5rem;
+    z-index: 10;
+}
+
+.fader-pause-btn {
+    align-items: center;
+    display: flex;
+    height: 1.5rem;
+    justify-content: center;
+    overflow: hidden;
+    width: 1.5rem;
+    border-radius: 9999px;
+    background-color: rgb(255 255 255);
+    border: 1px solid rgb(0 0 0);
+}
+
+.fader-pause-btn:focus-within {
+    outline: 2px solid blue;
+}
+
+.fader-pause-btn .fader-play {
+    align-items: center;
+    display: none;
+    height: 1.5rem;
+    justify-content: center;
+    overflow: hidden;
+    width: 1.5rem;
+}
+
+.fader-pause-btn .fader-pause {
+    align-items: center;
+    display: flex;
+    height: 1.5rem;
+    justify-content: center;
+    overflow: hidden;
+    width: 1.5rem;
+}
+
+.fader-pause-btn .fader-play svg,
+.fader-pause-btn .fader-pause svg {
+    height: 1rem;
+    width: 1rem;
+}
+
+.fader-pause-btn.is-pause .fader-play {
+    display: flex;
+}
+
+.fader-pause-btn.is-pause .fader-pause {
+    display: none;
+}
+
+.fader-pause-check {
+    border: none;
+    background-color: transparent;
+    height: 1.5rem;
+    margin: 0;
+    opacity: 0;
+	padding: 0;
+    position: absolute;
+    width: 1.5rem;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.fader-pause-check:hover {
+    cursor: pointer;
+}
