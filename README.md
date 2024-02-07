@@ -30,3 +30,13 @@ Designed with an Emphasis on Web Accessibility.
 ### Demo & Code
 - [Demo](https://burnworks.github.io/keen-slider-code-examples/Arrows_and_Dots_Nav/)
 - [Code](./docs/Arrows_and_Dots_Nav)
+## 4. Arrows_and_Dots_Nav_AutoSwitch
+（3）を自動再生にして一時停止ボタンを設置したもの
+- 横スクロール型スライド（ループ）
+- 自動再生
+- 一時停止ボタン
+- ドットナビゲーション表示
+- 左右矢印ナビゲーション表示
+### Demo & Code
+- [Demo](https://burnworks.github.io/keen-slider-code-examples/Arrows_and_Dots_Nav_AutoSwitch/)
+- [Code](./docs/Arrows_and_Dots_Nav_AutoSwitch)
