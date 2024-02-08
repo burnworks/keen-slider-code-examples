@@ -6,6 +6,10 @@ Sample Slider (Carousel) Implementation Using Keen-Slider.
 Designed with an Emphasis on Web Accessibility.
 
 - [Keen-Slider](https://keen-slider.io/)
+
+> [!NOTE]
+> サンプルコードで使用しているバージョン (The version used in the sample code)  
+> v6.8.6
 ## 1. Fader_AutoSwitch_Dots_and_Pause_Button
 - フェードイン / フェードアウトによるスライド（ループ再生）
 - 自動再生
