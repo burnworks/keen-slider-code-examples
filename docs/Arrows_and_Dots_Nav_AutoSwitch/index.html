@@ -20,13 +20,13 @@
         <section class="block__slider" aria-roledescription="カルーセル" aria-label="カルーセルのサンプル">
             <div id="is-keen-slider" class="fader" aria-live="off">
                 <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="スライド">
-                    <img src="../assets/slide-01.png" alt="画像：01">
+                    <a href="#"><img src="../assets/slide-01.png" alt="リンクの目的を示す代替テキスト01"></a>
                 </div>
                 <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="スライド">
                     <img src="../assets/slide-02.png" alt="画像：02">
                 </div>
                 <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="スライド">
-                    <img src="../assets/slide-03.png" alt="画像：03">
+                    <a href="#"><img src="../assets/slide-03.png" alt="リンクの目的を示す代替テキスト02"></a>
                 </div>
                 <div class="fader-slide keen-slider__slide" role="group" aria-roledescription="スライド">
                     <img src="../assets/slide-04.png" alt="画像：04">
@@ -141,6 +141,15 @@
                 slider.slides.forEach((slide, index) => {
                     const isActive = index === slider.track.details.rel;
                     slide.setAttribute('aria-hidden', !isActive);
+                    slide.querySelectorAll('a').forEach(link => {
+                        // 親が aria-hidden="true" の場合は tabindex="-1" を付与
+                        if (!isActive) {
+                            link.setAttribute('tabindex', '-1');
+                        } else {
+                            // 親が aria-hidden="false" またはそれに準じる場合は tabindex 属性を削除
+                            link.removeAttribute('tabindex');
+                        }
+                    });
                 });
             };
 

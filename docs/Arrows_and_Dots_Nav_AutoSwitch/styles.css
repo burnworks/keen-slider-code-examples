@@ -69,6 +69,14 @@ footer a:hover {
     width: 100%;
 }
 
+.fader-slide a {
+    display: block;
+}
+
+.fader-slide a:focus {
+    outline-offset: -2px;
+}
+
 .fader-slide img {
     height: auto;
     width: 100%;
